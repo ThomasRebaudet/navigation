@@ -206,7 +206,11 @@ namespace dwa_local_planner {
     drive_cmds.header.frame_id = costmap_ros_->getBaseFrameID();
     
     // call with updated footprint
+    ros::Time time1 = ros::Time::now();
     base_local_planner::Trajectory path = dp_->findBestPath(global_pose, robot_vel, drive_cmds);
+    ros::Time time2 = ros::Time::now();
+    ros::Duration runtime = time2 - time1;
+    ROS_INFO("Runtime of the DWA is %.4f", runtime.toSec());
     //ROS_ERROR("Best: %.2f, %.2f, %.2f, %.2f", path.xv_, path.yv_, path.thetav_, path.cost_);
 
     /* For timing uncomment
